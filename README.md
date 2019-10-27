@@ -4,5 +4,6 @@
 1. 先创建表，配置参数在settings.py里
 2. 运行
 
-`>cd cnki`
-`>scrapy crawl cnki`
+`>cd cnki`  
+  
+`>scrapy crawl cnki`  
