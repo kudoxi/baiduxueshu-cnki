@@ -19,10 +19,18 @@ class CnkiMysqlPipeline(object):
         self.cursor = self.db.cursor()
 
     def process_item(self,item,spider):
-        ins = "insert into article (title,content) values('%s','%s')"%(item['title'],item['content'])
-        print(ins)
-        self.cursor.execute(ins)
+        # 判断是否存在
+        is_exist = "select * from article where title = '%s'"%(item['title'])
+        self.cursor.execute(is_exist)
         self.db.commit()
+        data = self.cursor.fetchone()
+        if data:
+            print('this title {} is existed'.format(item['title']),data)
+        else:
+            ins = "insert into article (title) values('%s')"%(item['title'])
+            print(ins)
+            self.cursor.execute(ins)
+            self.db.commit()
         return item
 
     def close_spider(self,spider):
